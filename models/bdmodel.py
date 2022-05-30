@@ -10,15 +10,38 @@ def connect_bd():
                             database='ual-pl05',
                             user='admin',
                             password='ual-pl05')
-        #if connection.is_connected():
-        #    db_Info = connection.get_server_info()
-        #    print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("create table SALA (lugar varchar(3) not null, preco float not null, VIP boolean not null, PRIMARY KEY (lugar))")
-        #record = cursor.fetchone()
-        #print("You're connected to database: ", record)
-
-        connection.close()
+                            
+        return connection
     except Error as e:
         print("Error while connecting to MySQL", e)
     
+
+def get_eventos():
+    try:
+        connection = connect_bd()
+        
+        cursor = connection.cursor()
+        cursor.execute("Select Nome, Data from `ual-pl05`.Eventos where data >= sysdate()")
+        dataset = cursor.fetchall()
+        
+        connection.close()
+
+        return dataset
+    except Error as e:
+        return ("Error while connecting to MySQL", e)
+
+
+
+def get_eventos():
+    try:
+        connection = connect_bd()
+        
+        cursor = connection.cursor()
+        cursor.execute("Select Nome, Data from `ual-pl05`.Eventos where data >= sysdate()")
+        dataset = cursor.fetchall()
+        
+        connection.close()
+
+        return dataset
+    except Error as e:
+        return ("Error while connecting to MySQL", e)
