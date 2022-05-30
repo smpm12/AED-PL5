@@ -53,10 +53,12 @@ def main():
             if args2 != []:
                 window.close()
                 window = w.create_window(args1)
+                args2 = []
             else:
                 if args1 != []:
                     window.close()
                     window = w.create_window(args)
+                    args1 = []
             
                 
                 

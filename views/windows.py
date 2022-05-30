@@ -82,7 +82,16 @@ def create_window(args:list):
             sg.theme('LightGrey1')
             sg.set_options(font = 'Franklin 14', button_element_size= (6,3))
 
+            lugares =c.criar_sala()
+
             layout = [
+                [sg.Button(
+                    'Voltar', 
+                    font = 'Franklin 10',
+                    button_color= 'Red',
+                    size = (10,1)
+                    )
+                ],
                 [sg.Text(
                     args[2], 
                     font = 'Franklin 30', 
@@ -93,36 +102,6 @@ def create_window(args:list):
                     key = '-HEADER-'
                     )
                 ],
-                [sg.Button(
-                    'A1', 
-                    font = 'Franklin 14',
-                    size = (1,1),
-                    pad = (5,5),
-                    disabled = True
-                    ),
-                sg.Button(
-                    ' ', 
-                    font = 'Franklin 14',
-                    size = (1,1),
-                    pad = (5,5),
-                    disabled = True
-                    #visible = False
-                    ), 
-                sg.Button(
-                    'A2', 
-                    font = 'Franklin 14',
-                    size = (1,1),
-                    pad = (5,5),
-                    disabled = True
-                    )
-                ],
-                [sg.Button(
-                    'B1', 
-                    font = 'Franklin 14',
-                    size = (1,1),
-                    pad = (5,5),
-                    disabled = True
-                    )
-                ],
+                lugares
             ]
             return sg.Window('Eespetáculos', layout, resizable=True, location= args[1], size=(800,600)).finalize()

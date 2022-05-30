@@ -23,5 +23,20 @@ def listar_eventos():
 
 
 def criar_sala():
-    sala_evento:list = []
-    sla = bd.get_eventos()
+    lugares_fila = []
+    n_colunas = bd.get_sala_n_coluna()
+    n_filas = bd.get_sala_n_filas()
+    sala_dataset = bd.get_sala()
+    lugares = [[]]
+    for i in range (n_filas):
+        for j in range(n_colunas):
+            lugares_fila.append(sala_dataset[(i*n_colunas)+j][3])
+
+        lugares.append(            
+                [sg.Button(lugar, font = 'Franklin 14',size = (1,1),pad = (2,2))] for lugar in lugares_fila 
+            )
+        lugares_fila = []
+
+    return lugares
+   
+        

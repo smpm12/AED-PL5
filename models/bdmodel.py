@@ -32,12 +32,12 @@ def get_eventos():
 
 
 
-def get_eventos():
+def get_sala():
     try:
         connection = connect_bd()
         
         cursor = connection.cursor()
-        cursor.execute("Select Nome, Data from `ual-pl05`.Eventos where data >= sysdate()")
+        cursor.execute("SELECT id, Fila, Coluna, Lugar, Vip, Ativo, Preco FROM `ual-pl05`.Sala")
         dataset = cursor.fetchall()
         
         connection.close()
@@ -45,3 +45,36 @@ def get_eventos():
         return dataset
     except Error as e:
         return ("Error while connecting to MySQL", e)
+
+
+
+def get_sala_n_filas():
+    try:
+        connection = connect_bd()
+        
+        cursor = connection.cursor()
+        cursor.execute("SELECT max(Fila) FROM `ual-pl05`.Sala")
+        dataset = cursor.fetchall()
+        
+        connection.close()
+
+        return dataset[0][0]
+    except Error as e:
+        return ("Error while connecting to MySQL", e)
+
+
+
+def get_sala_n_coluna():
+    try:
+        connection = connect_bd()
+        
+        cursor = connection.cursor()
+        cursor.execute("SELECT max(Coluna) FROM `ual-pl05`.Sala")
+        dataset = cursor.fetchall()
+        
+        connection.close()
+
+        return dataset[0][0]
+    except Error as e:
+        return ("Error while connecting to MySQL", e)
+        
