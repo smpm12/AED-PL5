@@ -5,4 +5,4 @@ import sys
 
 sys.stdout.reconfigure(encoding = 'UTF-8')
 if __name__ == "__main__":
-    g.main()
+    g.view()

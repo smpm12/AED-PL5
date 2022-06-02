@@ -21,7 +21,7 @@ def get_eventos():
         connection = connect_bd()
         
         cursor = connection.cursor()
-        cursor.execute("Select Nome, Data from `ual-pl05`.Eventos where data >= sysdate()")
+        cursor.execute("Select id, Nome, Data from `ual-pl05`.Eventos where data >= sysdate()")
         dataset = cursor.fetchall()
         
         connection.close()
@@ -78,3 +78,20 @@ def get_sala_n_coluna():
     except Error as e:
         return ("Error while connecting to MySQL", e)
         
+
+
+def get_sala_livre(evento:int):
+    try:
+        connection = connect_bd()
+        
+        cursor = connection.cursor()
+        cursor.execute(f"Select s.lugar, s.VIP, s.Ativo, r.estadoid from `ual-pl05`.Sala s left join `ual-pl05`.Reservas r on r.SalaId = s.id and r.EventoId = {evento}")
+        dataset = cursor.fetchall()
+        
+        connection.close()
+
+        return dataset
+    except Error as e:
+        return ("Error while connecting to MySQL", e)
+
+    

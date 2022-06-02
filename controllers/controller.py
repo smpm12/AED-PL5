@@ -1,42 +1,52 @@
 from models import bdmodel as bd
-import PySimpleGUI as sg
 
-def criar_botoes_eventos():
-
-    botoes_eventos:list = []
-    eventos = bd.get_eventos()
-    botoes_eventos = [
-        [sg.Button( evento[0], font = 'Franklin 14',size = (15,3),pad = (40,20))] for evento in eventos 
-        ]
-
-    return botoes_eventos
 
 
 def listar_eventos():
 
     lista_eventos:list = []
     eventos = bd.get_eventos()
-    for evento in eventos:
-        lista_eventos.append(evento[0])
+    lista_eventos:str = ""
+    for id, evento, data in eventos:
+        while len(evento) < 45:
+            evento = f"{evento} "
+
+        lista_eventos:str = f"{lista_eventos}{id} - {evento}\t{data}\n"
 
     return lista_eventos
 
 
-def criar_sala():
-    lugares_fila = []
-    n_colunas = bd.get_sala_n_coluna()
-    n_filas = bd.get_sala_n_filas()
-    sala_dataset = bd.get_sala()
-    lugares = [[]]
-    for i in range (n_filas):
-        for j in range(n_colunas):
-            lugares_fila.append(sala_dataset[(i*n_colunas)+j][3])
+def verificar_lugares_livres()->True:
+    return True
 
-        lugares.append(            
-                [sg.Button(lugar, font = 'Franklin 14',size = (1,1),pad = (2,2))] for lugar in lugares_fila 
-            )
-        lugares_fila = []
 
-    return lugares
-   
+
+def sugerir_lugares(n_evento:int, n_lugares_reserva:int, tipo_lugar:str):
+    lugares = bd.get_sala_livre(n_evento)
+    sugestao:list = []
+    is_vip = 0
+    if tipo_lugar == "V":
         
+        is_vip =1
+
+    #sugestão de lugares seguidos
+    for lugar, vip, ativo, estado in lugares:
+        if ativo == 1 and estado == 0 and vip == is_vip:
+            sugestao.append(lugar)
+        else:
+            sugestao.clear()
+        
+        if len(sugestao) == n_lugares_reserva:
+            break
+
+    #sugestão separada, caso não existam lugares seguidos
+    if sugestao == []:
+        for lugar, vip, ativo, estado in lugares:
+            if ativo == 1 and estado == 0 and vip == is_vip:
+                sugestao.append(lugar)
+
+            if len(sugestao) == n_lugares_reserva:
+                break
+
+    return sugestao
+

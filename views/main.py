@@ -1,67 +1,43 @@
-import PySimpleGUI as sg
-from views import windows as w
 from controllers import controller as c
+#import model as m
+import os
 
-# Main Window
-def main():
+def view():
 
-    #argumentos para o nivel 0
-    args:list = ['Homepage', (0,0)]
-
-    #argumentos para o nivel 1
-    args1:list = []
-
-    #argumentos para o nivel 2
-    args2:list = []
-
-
-    window_location:tuple
-
-#nivel 0 - homepage
-    window = w.create_window(args)
-    #window.Maximize()
-
-
-#criar uma window2 com modal para as prompts (exemplo: confirmar reserva/cancelamentos)
+    clear = lambda: os.system('cls')
     while True:
-        event, values = window.read()
-
-        if event == sg.WIN_CLOSED:
-            break
+        clear()
+        print("Sala de Eventos\n\n1-Fazer Reserva\n2-Editar Reserva\n3-Cancelar Reserva\n4-Consultar Caixa")
         
-        #nivel 1 - Eventos
-        if event == 'Fazer Reserva':
-            args1 = []
-            window_location= window.CurrentLocation()
-            args1.append('Eventos')
-            args1.append(window_location)
-            window.close()
-            window = w.create_window(args1)
-        
-        #nivel 1
-        if event in c.listar_eventos():
-            args2 = []
-            args2.append('Sala')
-            window_location= window.CurrentLocation()
-            args2.append(window_location)
-            args2.append(event)
-            window.close()
-            window = w.create_window(args2)
+        menu:str = input()
+        match menu:
+            case "1":
 
-        #nivel 2
-        if event == 'Voltar':
-            if args2 != []:
-                window.close()
-                window = w.create_window(args1)
-                args2 = []
-            else:
-                if args1 != []:
-                    window.close()
-                    window = w.create_window(args)
-                    args1 = []
-            
-                
-                
+                clear()
+                #listar apenas espetaculos com lugares livres
+                print(c.listar_eventos())
+                print(f"\nIndique o numero corresponder ao evento que deseja reservar:")
+                n_evento:int = int(input())
+
+                if c.verificar_lugares_livres():
+                    clear()
+                    print(f"Tipo de Lugar:\nN-Normal\nV-VIP")
+                    tipo_lugar = input()
+                    print(f"\nQuantos lugares deseja reservar?")
+                    #verificar se existem x lugares seguidos , conforme a reservva, senão sugere separadamente
+                    lugares_input:str = int(input())
+                    print(c.sugerir_lugares(n_evento, lugares_input, tipo_lugar))
+                    input()
 
 
-       
+
+            case "2":
+                pass
+            case "3":
+                pass
+            case "4":
+                pass
+            case _:
+                print("Instrução inválida!!")
+
+
