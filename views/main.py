@@ -66,7 +66,7 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                 lista_reservas_evento = c.get_lista_reservas_evento(lista_reservas, n_evento) 
                 print(f"{c.get_evento(lista_de_eventos_disponveis, n_evento)}\n")
                 #apresentar a sala -  disposição de lugares e lugares livres
-                sala.main(lista_sala)
+                sala.main(lista_sala, lista_reservas)
 
                 #escolher tipo de lugar
                 tipo_lugar_valido:bool = False
@@ -89,7 +89,7 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                             lugares_validos:bool = False
                             while not lugares_validos:
                                 clear()
-                                sala.main(lista_sala)
+                                sala.main(lista_sala, lista_reservas)
                                 print(f"\nQuantos lugares pretende reservar?\n")
                                 n_lugares = int(input())
 
@@ -100,7 +100,7 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                                     lista_lugares = c.sugerir_lugares(n_lugares, tipo_lugar, lista_reservas_evento, lista_sala)
                                     clear()
                                     print(lista_lugares)
-                                    sala.main(lista_sala)
+                                    sala.main(lista_sala, lista_reservas)
                                     
                                     confirmar_lugares:bool = False
 
