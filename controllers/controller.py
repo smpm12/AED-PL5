@@ -331,4 +331,9 @@ def pesquisar_caixa(lista_reservas:list, data_pesquisa:str, periodo:str, lista_t
 def validar_nif (nif_cliente):
     if len(nif_cliente) != 9:
         return False
+    
+    for digito in nif_cliente:
+        if not digito.isnumeric():
+            return False
+    
     return True

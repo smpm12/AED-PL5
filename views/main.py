@@ -117,18 +117,21 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                                             confirmar_lugares = True
                                             clear()
                                             print(f"Detalhes da reserva:\n\nEvento:\t{c.get_evento(lista_de_eventos_disponveis, n_evento)}\nValor:\t{c.get_valor_reserva(lista_tipo_lugar, tipo_lugar, n_lugares)}€\n")
-                                            print(f"\nIndique o nome em que a reserva fica:")
-                                            nome_cliente:str = input()
+                                            
+                                            nome_cliente:str = ' '
                                             print(f"\nIndique o Nif:")
                                             nif_cliente:str = input()
+                                            nif_valido = False
+                                            while not nif_valido:
+                                                if not c.validar_nif(nif_cliente):
+                                                    print("O NIF é inválido\nVerifique o numero e introduza novamente:")
+                                                    nif_cliente:str = input()
+                                                else:
+                                                    nif_valido = True
 
-                                            if not c.validar_nif(nif_cliente):
-                                                print("O NIF introduzido é inválido ")
-                                            else:
-
-                                                if c.criar_reserva(nome_cliente, nif_cliente, lista_lugares, n_evento):
-                                                    print("Reserva feita com sucesso\n\n")
-                                                    time.sleep(2)
+                                                    if c.criar_reserva(nome_cliente, nif_cliente, lista_lugares, n_evento):
+                                                        print("Reserva feita com sucesso\n\n")
+                                                        time.sleep(2)
 
                                         elif confirmar_lugares == 2:
                                             confirmar_lugares = True
