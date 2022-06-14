@@ -25,7 +25,7 @@ def view():
             case "3":
                 cancelar_reserva(lista_eventos, lista_reservas, lista_tipo_lugar, lista_sala)
             case "4":
-                consultar_caixa()
+                consultar_caixa(lista_reservas, lista_tipo_lugar)
             case "0":
                 clear()
                 print("Volte sempre\n\n")
@@ -64,9 +64,9 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                 evento_valido = True
                 clear()
                 lista_reservas_evento = c.get_lista_reservas_evento(lista_reservas, n_evento) 
-                print(f"{c.get_evento(lista_de_eventos_disponveis, n_evento)}\n")
+                #print(f"{c.get_evento(lista_de_eventos_disponveis, n_evento)}\n")
                 #apresentar a sala -  disposição de lugares e lugares livres
-                sala.main(lista_sala, lista_reservas)
+                sala.main(lista_sala, lista_reservas_evento, lista_de_eventos_disponveis, n_evento, [])
 
                 #escolher tipo de lugar
                 tipo_lugar_valido:bool = False
@@ -89,7 +89,7 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                             lugares_validos:bool = False
                             while not lugares_validos:
                                 clear()
-                                sala.main(lista_sala, lista_reservas)
+                                sala.main(lista_sala, lista_reservas_evento, lista_de_eventos_disponveis, n_evento, [])
                                 print(f"\nQuantos lugares pretende reservar?\n")
                                 n_lugares = int(input())
 
@@ -100,7 +100,7 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                                     lista_lugares = c.sugerir_lugares(n_lugares, tipo_lugar, lista_reservas_evento, lista_sala)
                                     clear()
                                     print(lista_lugares)
-                                    sala.main(lista_sala, lista_reservas)
+                                    sala.main(lista_sala, lista_reservas_evento, lista_de_eventos_disponveis, n_evento, lista_lugares)
                                     
                                     confirmar_lugares:bool = False
 
@@ -122,9 +122,13 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                                             print(f"\nIndique o Nif:")
                                             nif_cliente:str = input()
 
-                                            if c.criar_reserva(nome_cliente, nif_cliente, lista_lugares, n_evento):
-                                                print("Reserva feita com sucesso\n\n")
-                                                time.sleep(2)
+                                            if not c.validar_nif(nif_cliente):
+                                                print("O NIF introduzido é inválido ")
+                                            else:
+
+                                                if c.criar_reserva(nome_cliente, nif_cliente, lista_lugares, n_evento):
+                                                    print("Reserva feita com sucesso\n\n")
+                                                    time.sleep(2)
 
                                         elif confirmar_lugares == 2:
                                             confirmar_lugares = True
@@ -217,15 +221,41 @@ def cancelar_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:l
 
 
 
+def consultar_caixa(lista_reservas:list, lista_tipo_lugar:list):
+    clear = lambda: os.system('cls')
+    clear() #limpar a consola
 
+    print("Pretedente consultar o valor em caixa num: \n1 - Dia\n2 - Mes\n3 - Ano\n(escolha o numero da opção)\n")
+    opcao_consultar = input()
+    
+    opcao_consultar_validar = False
+    while not opcao_consultar_validar:
+        if opcao_consultar == '1':
+            opcao_consultar_validar = True
+            print("\nIndique a data que pretende pesquisar (dd-mm-yyyy)")
+            data_pesquisa = input()
+            valor_caixa = c.pesquisar_caixa(lista_reservas, data_pesquisa, 'D', lista_tipo_lugar)
             
 
+        elif opcao_consultar == '2':
+            opcao_consultar_validar = True
+            print("Indique a data que pretende pesquisar (mm-yyyy)")
+            data_pesquisa = input()
+            valor_caixa = c.pesquisar_caixa(lista_reservas, data_pesquisa, 'M', lista_tipo_lugar)
+
+        elif opcao_consultar == '3':
+            opcao_consultar_validar = True
+            print("Indique a data que pretende pesquisar (yyyy)")
+            data_pesquisa = input()
+            valor_caixa = c.pesquisar_caixa(lista_reservas, data_pesquisa, 'A', lista_tipo_lugar)
+
+        else:
+            print("Opção inválida\n\n")
+        
+        print(f"O valor da caixa para o periodo {data_pesquisa} é de: {valor_caixa}€")
+        print("Pressione enter para continuar")
+        input()
 
 
 
-    
 
-
-
-def consultar_caixa():
-    pass

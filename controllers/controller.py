@@ -297,3 +297,38 @@ def cancelar_reserva(lista_lugares_cancelar:list, nif_cliente:str, n_evento:int)
         else:
             lugares:str = f"{lugares}, '{lista_lugares_cancelar[i]}'"
     return bd.cancelar_reserva(nif_cliente, n_evento, lugares)
+
+
+
+
+def pesquisar_caixa(lista_reservas:list, data_pesquisa:str, periodo:str, lista_tipo_lugar:str)-> float:
+    reservas:list
+
+    total:float = 0
+
+    if periodo == 'D':
+        formato_data = "%d-%m-%Y"
+    if periodo == 'M':
+        formato_data = "%m-%Y"
+    if periodo == 'A':
+        formato_data = "%Y"
+
+
+    for reservas in lista_reservas:
+        if reservas[3] == 1:
+            if reservas[5].strftime(formato_data) == data_pesquisa:
+                for tipo in lista_tipo_lugar:
+                    if reservas[2] == tipo[0]:
+                        total = total + tipo[2]
+                        break
+                
+
+    return total
+
+
+
+
+def validar_nif (nif_cliente):
+    if len(nif_cliente) != 9:
+        return False
+    return True
