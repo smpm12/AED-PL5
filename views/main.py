@@ -99,7 +99,6 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
                                     lugares_validos = True
                                     lista_lugares = c.sugerir_lugares(n_lugares, tipo_lugar, lista_reservas_evento, lista_sala)
                                     clear()
-                                    print(lista_lugares)
                                     sala.main(lista_sala, lista_reservas_evento, lista_de_eventos_disponveis, n_evento, lista_lugares)
                                     
                                     confirmar_lugares:bool = False
@@ -235,20 +234,20 @@ def consultar_caixa(lista_reservas:list, lista_tipo_lugar:list):
     while not opcao_consultar_validar:
         if opcao_consultar == '1':
             opcao_consultar_validar = True
-            print("\nIndique a data que pretende pesquisar (dd-mm-yyyy)")
+            print("\nIndique a data que pretende pesquisar (dd-mm-aaaa)")
             data_pesquisa = input()
             valor_caixa = c.pesquisar_caixa(lista_reservas, data_pesquisa, 'D', lista_tipo_lugar)
             
 
         elif opcao_consultar == '2':
             opcao_consultar_validar = True
-            print("Indique a data que pretende pesquisar (mm-yyyy)")
+            print("Indique a data que pretende pesquisar (mm-aaaa)")
             data_pesquisa = input()
             valor_caixa = c.pesquisar_caixa(lista_reservas, data_pesquisa, 'M', lista_tipo_lugar)
 
         elif opcao_consultar == '3':
             opcao_consultar_validar = True
-            print("Indique a data que pretende pesquisar (yyyy)")
+            print("Indique a data que pretende pesquisar (aaaa)")
             data_pesquisa = input()
             valor_caixa = c.pesquisar_caixa(lista_reservas, data_pesquisa, 'A', lista_tipo_lugar)
 

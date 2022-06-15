@@ -1,6 +1,6 @@
 from models import bdmodel as bd
 from datetime import datetime
-
+from operator import itemgetter
 
 
 def get_lista_eventos()->list:
@@ -159,6 +159,8 @@ def sugerir_lugares(n_lugares_reserva:int, tipo_lugar:int, lista_reservas_evento
     fila_atual:int = 0
     i:int
     j:int
+    
+    sorted(lista_sala, key=itemgetter(0,1))
 
     #sugestão de lugares seguidos
     for i in range(len(lista_reservas_evento)):
