@@ -206,9 +206,13 @@ def sugerir_lugares(n_lugares_reserva:int, tipo_lugar:int, lista_reservas_evento
 
     #sugestão separada, caso não existam lugares seguidos
     if sugestao == []:
-        for lugar in lista_reservas_evento:
-            if lugar[3] == 0 and lugar[2] == tipo_lugar:
-                sugestao.append(lugar[1])
+
+        for lugar_sala in lista_sala:
+            for lugar in lista_reservas_evento:
+                if lugar_sala[2] == lugar[1]:
+                    if lugar[3] == 0 and lugar[2] == tipo_lugar:
+                        sugestao.append(lugar[1])
+                        break
 
             if len(sugestao) == n_lugares_reserva:
                 break

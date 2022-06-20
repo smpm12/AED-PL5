@@ -5,7 +5,7 @@ import os
 
 def view():
 
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
     lista_eventos = c.get_lista_eventos()
     
     lista_tipo_lugar = c.get_lista_tipo_lugar()
@@ -39,7 +39,7 @@ def view():
 
 def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list, lista_sala:str):
 
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
     clear() #limpar a consola
     evento_valido: bool = False
 
@@ -96,6 +96,7 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
 
                                 if not c.verificar_lugares_livres(n_lugares, n_evento, tipo_lugar, lista_reservas_evento):
                                     print(f"Lamentámos mas apenas existem {c.verificar_lugares_livres_tipo(n_evento, tipo_lugar, lista_reservas_evento)} lugares livres para o tipo {c.get_tipo_lugar_descr(tipo_lugar, lista_tipo_lugar)}")
+                                    time.sleep(3)
                                 else:
                                     lugares_validos = True
                                     lista_lugares = c.sugerir_lugares(n_lugares, tipo_lugar, lista_reservas_evento, lista_sala)
@@ -226,7 +227,7 @@ def fazer_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list
 
 
 def editar_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list, lista_sala:list):
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
     clear() #limpar a consola
 
     
@@ -275,7 +276,7 @@ def editar_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:lis
                             sala.main(lista_sala, lista_reservas_evento, lista_de_eventos_disponveis, n_evento, lista_lugares, 'C')
 
                             #print(f"{c.listar_lugares(lista_reservas_cliente_eventos, lista_tipo_lugar)}")
-                            print("Indique os lugares que pretende remover, caso seja mais do que um, introduza os lugares separados por virgula:\nex:A1,A2\n\nSenão pretender remover lugares pressione a tecla Enter para continuar\n")
+                            print("Indique os lugares que pretende remover, caso seja mais do que um, introduza os lugares separados por virgula:\nex:A1,A2\n\nSe não pretender remover lugares pressione a tecla Enter para continuar\n")
 
                             #remover lugares
                             lugares_validos_remover:bool = False
@@ -306,7 +307,7 @@ def editar_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:lis
                             sala.main(lista_sala, lista_reservas_evento, lista_de_eventos_disponveis, n_evento, lista_lugares, 'C')
 
                             #adicionar lugares
-                            print("Caso pretenda adicionar lugares a reserva, indique os mesmos separados por virgula.\nex:A1,A2\n\nSenão pretender adicionar lugares pressione a tecla Enter para continuar\n")
+                            print("Caso pretenda adicionar lugares a reserva, indique os mesmos separados por virgula.\nex:A1,A2\n\nSe não pretender adicionar lugares pressione a tecla Enter para continuar\n")
 
                             lugares_validos_marcacao:bool = False
                             valor_marcacao =  0
@@ -388,7 +389,7 @@ def editar_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:lis
 
 
 def cancelar_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:list, lista_sala:list):
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
     clear() #limpar a consola
 
     
@@ -478,7 +479,7 @@ def cancelar_reserva(lista_eventos:list, lista_reservas:list, lista_tipo_lugar:l
 
 
 def consultar_caixa(lista_reservas:list, lista_tipo_lugar:list):
-    clear = lambda: os.system('cls')
+    clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')
 
     continuar_operacao = True
     while continuar_operacao:
